@@ -8,7 +8,7 @@ import AlbumList from './src/components/AlbumList';
 export default class App extends React.Component {
  async componentWillMount(){
   await Font.loadAsync({
-      'open-sans-bold': require('./assests/font/OpenSans-Bold.ttf'),
+      'open-sans-bold': require('./assests/font/OpenSans-Bold.`ttf'),
     })
   }
   render() {
