@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 import {  View, Text, ScrollView,Linking} from 'react-native';
-import axios from 'axios';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
+
+import  *as actions  from '../actions/actionCreators'
 import AlbumDetail from './AlbumDetail';
+import AppContainer from '../../AppContainer';
 
-export default class AlbumList extends Component {
-    state = { albums:[] }
-
+class AlbumList extends Component {
     componentWillMount(){
-        const apiUrl = 'https://rallycoding.herokuapp.com/api/music_albums'
-        axios.get(apiUrl)
-            .then(response => this.setState({albums: response.data}))
+      this.props.actions.albumRequest()
+        
     }
     __onBuyEvent(url,e){
       console.log('Buying.....')
+     // this.props.actions
       Linking.openURL(url).catch(error=>console.error('An error occurred', error))
     }
     __renderAlbums(){
-       return this.state.albums.map((album,i)=><AlbumDetail album={album} onBuy={this.__onBuyEvent} key={i} />)
+       return this.props.albums.map((album,i)=><AlbumDetail album={album} onBuy={this.__onBuyEvent} key={i} />)
     }
   render() {
     return (
@@ -29,3 +31,17 @@ export default class AlbumList extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions:bindActionCreators(actions,dispatch)
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    albums: state.albums
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AlbumList)

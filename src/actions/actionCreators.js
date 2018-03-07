@@ -4,7 +4,7 @@ import  actionsTypes  from './actionTypes';
 import {Font} from 'expo';
 
 
-export const albumRequest = (url='')=>{
+export const albumRequest = ()=>{
     return(dispatch)=>{
 
         //making an api call
