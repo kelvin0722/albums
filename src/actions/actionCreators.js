@@ -6,7 +6,8 @@ import {Font} from 'expo';
 
 export const albumRequest = ()=>{
     return(dispatch)=>{
-
+        // setting fetching true
+        dispatch(fetching())
         //making an api call
         const apiUrl = 'https://rallycoding.herokuapp.com/api/music_albums'
         axios.get(apiUrl)
@@ -19,7 +20,9 @@ export const albumAvailable = (albumsArray) => {
     return{
         type:actionsTypes.ALBUM_AVAILABLE,
         payload:{
+            isFetching:false,
             albums:[...albumsArray]
+            
         }
     }
   
@@ -52,8 +55,11 @@ export const albumRedirectFailure = (msg='') =>{
     }
   }
 
-  export const loadFonts = ()=> {
+export const loadFonts = ()=> {
     return (dispatch)=>{
+
+        // setting fetching to true
+        dispatch(fetching())
         // make  call to load fonts
          Font.loadAsync({
             'open-sans-bold': require('../../assests/font/OpenSans-Bold.ttf'),
@@ -67,8 +73,17 @@ export const albumRedirectFailure = (msg='') =>{
         return{
             type:actionsTypes.LOAD_FONTS_SUCCESS,
             payload:{
-                isLoadFont:true
+                isLoadFont:true,
+                isFetching:false
             }
         }
 
   }
+export const fetching = () =>{
+    return {
+        type:actionsTypes.FETCHING,
+        payload:{
+            isFetching:true
+        }
+    }
+}

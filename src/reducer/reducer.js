@@ -17,7 +17,8 @@ export const albumReducer = (state = InitialState, action) => {
         case actionTypes.ALBUM_AVAILABLE :
             return {
                 ...state,
-                albums:[...action.payload.albums]
+                albums:[...action.payload.albums],
+                isFetching:action.payload.isFetching
             }
         case actionTypes.ALBUM_REDIRECT_SUCCESS:
             return {
@@ -32,8 +33,14 @@ export const albumReducer = (state = InitialState, action) => {
         case actionTypes.LOAD_FONTS_SUCCESS:
             return {
                 ...state,
-                isLoadFont:action.payload.isLoadFont
-            }   
+                isLoadFont:action.payload.isLoadFont,
+                isFetching:action.payload.isFetching
+            } 
+        case actionTypes.FETCHING:
+            return{
+                ...state,
+                isFetching:action.payload.isFetching
+            }
         default:
             return state
     }
